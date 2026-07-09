@@ -1104,6 +1104,13 @@ def api_set_startup(server_id):
 # ============================================
 # স্টার্ট
 # ============================================
+# ============================================
+# HEALTH CHECK (Adicione esta rota)
+# ============================================
+@app.route('/')
+def health_check():
+    return jsonify({"status": "healthy", "message": "LEO MDZ HOSTING is online"}), 200
+    
 
 if __name__ == '__main__':
     print("\n" + "=" * 50)
