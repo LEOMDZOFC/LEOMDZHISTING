@@ -7,69 +7,83 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #0c0e14; color: #fff; font-family: 'Segoe UI', sans-serif; }
-        .console-box { background:#0a0a0a; font-family:'Courier New',monospace; height:420px; overflow-y:auto; padding:15px; color:#e0e0e0; border:1px solid #2a2a2a; border-radius:10px; font-size:13px; white-space:pre-wrap; line-height:1.5; }
-        .console-box::-webkit-scrollbar { width:6px; }
-        .console-box::-webkit-scrollbar-track { background:#1a1a1a; }
-        .console-box::-webkit-scrollbar-thumb { background:#3b82f6; border-radius:3px; }
-        .tab-active { color:#3b82f6; border-bottom:2px solid #3b82f6; font-weight:600; }
+        body { background-color: #0d0e15; color: #fff; font-family: 'Segoe UI', sans-serif; }
         
+        /* Console hacker com texto ciano neon e scroll roxo */
+        .console-box { background:#07080c; font-family:'Courier New',monospace; height:420px; overflow-y:auto; padding:15px; color:#00ffcc; border:1px solid #1e2235; border-radius:10px; font-size:13px; white-space:pre-wrap; line-height:1.5; box-shadow: inset 0 0 15px rgba(0, 255, 204, 0.05); }
+        .console-box::-webkit-scrollbar { width:6px; }
+        .console-box::-webkit-scrollbar-track { background:#0d0e15; }
+        .console-box::-webkit-scrollbar-thumb { background:#a855f7; border-radius:3px; }
+        
+        /* Aba ativa brilhando em ciano */
+        .tab-active { color:#00f2fe; border-bottom:2px solid #00f2fe; font-weight:600; filter: drop-shadow(0 0 4px #00f2fe); }
+        
+        /* Toasts com cores ultra saturadas e glow de fundo */
         .toast-container { position:fixed; bottom:20px; right:20px; z-index:9999; display:flex; flex-direction:column; gap:10px; }
-        .toast { background:#1a1d27; border:1px solid #2a2d37; border-radius:12px; padding:14px 18px; min-width:300px; max-width:380px; display:flex; align-items:center; gap:12px; animation:slideIn 0.3s ease-out; box-shadow:0 10px 40px rgba(0,0,0,0.5); }
-        .toast.success { border-left:4px solid #10b981; }
-        .toast.error { border-left:4px solid #ef4444; }
-        .toast.info { border-left:4px solid #3b82f6; }
-        .toast.warning { border-left:4px solid #f59e0b; }
+        .toast { background:#141521; border:1px solid #25283a; border-radius:12px; padding:14px 18px; min-width:300px; max-width:380px; display:flex; align-items:center; gap:12px; animation:slideIn 0.3s ease-out; box-shadow:0 10px 40px rgba(0,0,0,0.7); }
+        .toast.success { border-left:4px solid #00ff87; box-shadow: 0 0 15px rgba(0, 255, 135, 0.15); }
+        .toast.error { border-left:4px solid #ff0055; box-shadow: 0 0 15px rgba(255, 0, 85, 0.15); }
+        .toast.info { border-left:4px solid #00f2fe; box-shadow: 0 0 15px rgba(0, 242, 254, 0.15); }
+        .toast.warning { border-left:4px solid #ffaa00; box-shadow: 0 0 15px rgba(255, 170, 0, 0.15); }
         @keyframes slideIn { from{transform:translateX(400px);opacity:0} to{transform:translateX(0);opacity:1} }
         @keyframes slideOut { from{transform:translateX(0);opacity:1} to{transform:translateX(400px);opacity:0} }
         
-        .spinner { width:20px;height:20px;border:3px solid #2a2d37;border-top:3px solid #3b82f6;border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0; }
+        /* Spinner mudou para ciano neon veloz */
+        .spinner { width:20px;height:20px;border:3px solid #1e2235;border-top:3px solid #00f2fe;border-radius:50%;animation:spin 0.6s linear infinite;flex-shrink:0; box-shadow: 0 0 8px rgba(0, 242, 254, 0.4); }
         @keyframes spin { to{transform:rotate(360deg)} }
         
-        .stat-card { background:#12141c; border:1px solid #1e2130; border-radius:12px; padding:14px; transition:all 0.3s; }
-        .stat-card:hover { border-color:#3b82f6; }
+        /* Cards mudaram o hover para transição suave com brilho roxo */
+        .stat-card { background:#141521; border:1px solid #1e2235; border-radius:12px; padding:14px; transition:all 0.3s ease; }
+        .stat-card:hover { border-color:#a855f7; box-shadow: 0 0 15px rgba(168, 85, 247, 0.3); transform: translateY(-2px); }
         .btn { transition:all 0.2s; font-weight:600; font-size:13px; }
         .btn:active { transform:scale(0.95); }
         
         .status-dot { display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:4px;vertical-align:middle;position:relative;top:-1px; }
         
+        /* Dropdown com fundo combinando e hover roxo */
         .dropdown { position:relative; display:inline-block; }
         .dropdown-menu {
-            position:absolute; right:0; top:100%; background:#1a1d27; border:1px solid #2a2d37;
-            border-radius:8px; min-width:140px; z-index:100; display:none; box-shadow:0 10px 30px rgba(0,0,0,0.5);
+            position:absolute; right:0; top:100%; background:#141521; border:1px solid #25283a;
+            border-radius:8px; min-width:140px; z-index:100; display:none; box-shadow:0 10px 30px rgba(0,0,0,0.6);
         }
         .dropdown-menu.show { display:block; }
         .dropdown-menu button {
             display:block; width:100%; text-align:left; padding:8px 14px; font-size:12px;
             color:#d1d5db; transition:all 0.2s; border:none; background:none; cursor:pointer;
         }
-        .dropdown-menu button:hover { background:#252836; color:#fff; }
+        .dropdown-menu button:hover { background:#a855f7; color:#fff; }
         .dropdown-menu button:first-child { border-radius:8px 8px 0 0; }
         .dropdown-menu button:last-child { border-radius:0 0 8px 8px; }
         .dropdown-menu button i { width:16px; margin-right:8px; }
         
-        .folder-link { cursor:pointer; color:#eab308; }
-        .folder-link:hover { text-decoration:underline; }
+        /* Links de pasta em amarelo elétrico */
+        .folder-link { cursor:pointer; color:#ffee00; text-shadow: 0 0 5px rgba(255, 238, 0, 0.2); }
+        .folder-link:hover { text-decoration:underline; color:#fff; }
 
-        .github-card { background:#12141c; border:1px solid #2a2d37; border-radius:12px; padding:20px; }
-        .github-card:hover { border-color:#3b82f6; }
+        /* Card do GitHub brilhando em Ciano */
+        .github-card { background:#141521; border:1px solid #25283a; border-radius:12px; padding:20px; transition:all 0.3s ease; }
+        .github-card:hover { border-color:#00f2fe; box-shadow: 0 0 15px rgba(0, 242, 254, 0.3); transform: translateY(-2px); }
+        
+        /* Mini terminal combinando com o principal */
         .mini-terminal { 
-            background:#0b0b0e; font-family:'Courier New',monospace; 
-            height:180px; overflow-y:auto; padding:12px; color:#a0a0a0; 
-            border:1px solid #222; border-radius:8px; font-size:11px; 
+            background:#07080c; font-family:'Courier New',monospace; 
+            height:180px; overflow-y:auto; padding:12px; color:#00ffcc; 
+            border:1px solid #1e2235; border-radius:8px; font-size:11px; 
             white-space:pre-wrap; line-height:1.4; 
         }
         .mini-terminal::-webkit-scrollbar { width:4px; }
-        .mini-terminal::-webkit-scrollbar-track { background:#111; }
-        .mini-terminal::-webkit-scrollbar-thumb { background:#f59e0b; border-radius:2px; }
+        .mini-terminal::-webkit-scrollbar-track { background:#07080c; }
+        .mini-terminal::-webkit-scrollbar-thumb { background:#ffee00; border-radius:2px; }
 
+        /* Card de perfil */
         .profile-card {
-            background:#12141c;
-            border:1px solid #2a2d37;
+            background:#141521;
+            border:1px solid #25283a;
             border-radius:16px;
             padding:24px;
             width:380px;
             margin:0 auto;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
         }
     </style>
 </head>

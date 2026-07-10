@@ -8,31 +8,44 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #0a0c12; color: #ffffff; font-family: 'Segoe UI', sans-serif; }
-        .glass { background: rgba(18, 20, 28, 0.8); backdrop-filter: blur(10px); }
-        .gradient-border { border: 1px solid rgba(59, 130, 246, 0.3); }
-        .pulse { animation: pulse 2s infinite; }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        body { background-color: #0d0e15; color: #ffffff; font-family: 'Segoe UI', sans-serif; }
+        .glass { background: rgba(20, 21, 33, 0.75); backdrop-filter: blur(12px); }
+        /* Borda gradiente forte usando roxo e ciano neon */
+        .gradient-border { 
+            border: 1px solid transparent;
+            background: linear-gradient(#202133, #202133) padding-box,
+                        linear-gradient(135deg, #00f2fe, #4facfe) border-box;
         }
-        .hover-glow:hover { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+        .pulse { animation: pulse 1.5s infinite; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; filter: drop-shadow(0 0 2px #00f2fe); }
+            50% { opacity: 0.4; filter: drop-shadow(0 0 12px #00f2fe); }
+        }
+        /* Brilho neon intenso no hover */
+        .hover-glow:hover { 
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.6), 0 0 10px rgba(79, 172, 254, 0.4); 
+            border-color: #00f2fe;
+        }
+        /* Barra de progresso com cores ultra saturadas */
         input[type="range"] {
             -webkit-appearance: none;
             height: 8px;
             border-radius: 4px;
-            background: linear-gradient(to right, #10b981, #f59e0b, #ef4444);
+            background: linear-gradient(to right, #00ff87, #60efff, #ff007f);
             outline: none;
         }
+        /* Botão do slider em Magenta/Rosa choque para destacar totalmente */
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
-            background: #3b82f6;
+            background: #ff007f;
             cursor: pointer;
-            border: 2px solid white;
+            border: 3px solid #ffffff;
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.8);
         }
+
     </style>
 </head>
 <body class="bg-[#0a0c12] text-white">
