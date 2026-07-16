@@ -2,3 +2,5 @@ Flask
 Flask-Session
 werkzeug
 psutil
+gunicorn>=22.0.0
+
