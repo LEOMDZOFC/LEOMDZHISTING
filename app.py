@@ -1101,6 +1101,27 @@ def api_set_startup(server_id):
                 return jsonify({'success': True})
     return jsonify({'error': 'Not found'}), 404
 
+@app.route('/api/bot/create-server', methods=['POST'])
+def bot_create_server():
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "JSON inválido"}), 400
+    if not all(k in data for k in ['server_id', 'username', 'password', 'expires_days']):
+        return jsonify({"error": "Campos obrigatórios"}), 400
+    existing = Server.query.filter_by(server_id=data['server_id']).first()
+    if existing:
+        return jsonify({"error": "Server ID já existe"}), 409
+    new_server = Server(
+        server_id=data['server_id'],
+        username=data['username'],
+        password=data['password'],
+        expires=datetime.utcnow() + timedelta(days=int(data['expires_days'])),
+        created_at=datetime.utcnow(),
+        status="active"
+    )
+    db.session.add(new_server)
+    db.session.commit()
+    return jsonify({"success": True, "server_id": data['server_id'], "login_url": f"https://leomdzhosting.up.railway.app/{data['server_id']}/login"}), 201
 # ============================================
 # স্টার্ট
 # ============================================
