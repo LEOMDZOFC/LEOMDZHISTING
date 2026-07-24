@@ -1124,7 +1124,7 @@ def bot_create_server():
     return jsonify({"success": True, "server_id": data['server_id'], "login_url": f"https://leomdzhosting.up.railway.app/{data['server_id']}/login"}), 201
 # ============================================
 # স্টার্ট
-# ============================================
+# ===========================================
 
 if __name__ == '__main__':
     print("\n" + "=" * 50)
